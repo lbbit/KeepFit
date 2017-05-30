@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css"> 
+table,table td,table th{border:1px solid #a4f790;border-collapse:collapse;}
+    a{color:#a0a0e7;font-size:24px;}
+
+</style> 
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+</head>
+<body>
+<table width="100%">
+	<tr>
+		<th>序号</th>
+		<th>日期</th>
+		<th>体重(Kg)</th>
+		<th>备注信息</th>
+	</tr>
+{{weight_table|safe}}
+</table>
+</body>
+</html>

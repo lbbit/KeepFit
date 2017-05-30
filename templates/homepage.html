@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script type="text/javascript" src="{{url_for('static',filename='jquery.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static',filename='g2.js')}}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<meta charset="UTF-8">
+	<title>个人中心</title>
+    <style>
+input{
+box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+border: solid 1px rgba(82, 168, 236, 0.6);
+width: 160px;
+height: 40px;
+font-size:32px;
+}
+input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
+input::-webkit-input-placeholder {
+color: #333;
+font-size:22px;
+}
+input:focus::-webkit-input-placeholder, input:hover::-webkit-input-placeholder {
+color: #ffffff;
+}
+</style>
+
+<style type="text/css">
+    .head {
+    background: #FFA07A;
+    height: 82px;
+    width: 100%;
+}
+body, div, h1 {
+    margin: 0;
+    padding: 0;
+}
+.head .logo a {
+    display: block;
+    height: 79px;
+    width: 120px;
+    margin-left: 100px
+    text-indent: -999999px;
+    background-image: url({{url_for('static',filename='logo1.png')}});
+    background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;
+    background-position: 0 0;
+
+}
+.head .logo {
+    float: left;
+}
+.login-herf, .head-user,.head-logout{
+    line-height: 82px;
+    float: right;
+    margin-right: 50px
+}
+
+<style type="text/css">
+a.log {
+Display: block;
+Width: 140px;
+Padding: 3px;
+height:30ox
+Line-height: 30px;
+Background-color: #94b8e9;
+Border: 1px solid black;
+Color: #000;
+Text-decoration: none;
+Text-align: center;
+}
+a.log:hover {
+background-color: #369;
+color:#fff;
+}
+</style>
+<style type="text/css" >
+body { background-image: url({{url_for('static',filename='8.jpg')}}); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: fixed; }
+</style>
+</head>
+<body>
+    <div id='head' class='head'>
+        <div id='head-left' class='head-left'>
+            <div id='head-logo' class='logo'><a href="/"></a></div>
+        </div>      
+        <div id='head-right' class='head-right'>
+            <div id='head-logout' class='head-logout'><a href="/logout_action">{{logout_text|safe}}</a></div>
+            <div id='head-user' class='head-user'><a href="/homepage_index">{{home_text|safe}}</a></div>
+        </div>
+    </div>
+    <div style='width:80%;margin:0 auto'>
+	<div class="time_bar">
+    	<h1>{{user_name}}的健康中心</h1>
+	</div>
+	<div id="nowdate"></div>
+    <script type="text/javascript">
+		document.getElementById("nowdate").innerHTML=(new Date()).toLocaleDateString();
+    </script>
+
+    <div calss="inputbox">
+		<form action="/insert_myweight" method="post">
+			<table border="0">
+				<tr>
+					<td>
+						<div style="font-size:32px">
+							<div id="nowdate"></div>
+						</div>    
+					</td>
+					<td>
+						<input type="number" step="0.01" placeholder="输入今天的体重" name="weight" id="weight" maxlength="5" oninput="input();if(value.length>5)value=value.slice(0,5)">
+					</td>
+                </tr>
+                    <tr>
+                        <td colspan = "2">
+                            <div id="tips"></div>
+                        </td>                           
+                    </tr>
+                    <tr>
+                        <td>
+                        <div id="pwd"></div>
+                        </td>
+                        <td>                        
+                        <div id="submit"></div>
+                    </td>                        
+                    </tr>
+					
+			</table>
+		</form>
+	</div>
+	<script type="text/javascript">
+function input() {
+    var id = document.getElementById("weight").value;
+    id-=0;
+    if(id!=0)
+    {
+    	ajax({
+        url: "/datesearch",//请求地址
+        type: "GET",//请求方式
+        data: {},//请求参数
+        dataType: "json",
+        success: function (response, xml) {
+        	if(response==='existence')
+        	{
+        		document.getElementById("submit").innerHTML='<strong>今日体重已存入</strong>';
+        	}
+        	else
+        	{
+                document.getElementById("tips").innerHTML='<input style="width:90%" name="tips" id="tips" type="text"  placeholder="输入备注信息">';
+        		document.getElementById("submit").innerHTML='<input style="background-color:#19aae1;border-radius:2%;border:solid 2px #19aae1;height: 53px" type="submit" value="添加数据"/>';
+        	}
+            
+        },
+        fail: function (status) {}
+    });
+    }
+    else
+    {
+        document.getElementById("tips").innerHTML='';
+        document.getElementById("pwd").innerHTML='';
+    	document.getElementById("submit").innerHTML='';
+    }
+}
+function ajax(options) {
+        options = options || {};
+        options.type = (options.type || "GET").toUpperCase();
+        options.dataType = options.dataType || "json";
+        var params = formatParams(options.data);
+        if (window.XMLHttpRequest) {
+            var xhr = new XMLHttpRequest();
+        } else { 
+            var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                var status = xhr.status;
+                if (status >= 200 && status < 300) {
+                    options.success && options.success(xhr.responseText, xhr.responseXML);
+                } else {
+                    options.fail && options.fail(status);
+                }
+            }
+        }
+        if (options.type == "GET") {
+            xhr.open("GET", options.url + "?" + params, true);
+            xhr.send(null);
+        } else if (options.type == "POST") {
+            xhr.open("POST", options.url, true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send(params);
+        }
+    }
+function formatParams(data) {
+        var arr = [];
+        for (var name in data) {
+            arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]));
+        }
+        arr.push(("v=" + Math.random()).replace(".",""));
+        return arr.join("&");
+    }
+</script>
+
+<div id="c1" ></div>
+    <script>
+      var data = {{weight_datas|safe}};
+      var chart = new G2.Chart({
+        id: 'c1',
+        forceFit: true,
+        height: 450,
+        plotCfg: {
+  //margin: [30,50,30,50], // 边距设置，接受参数同 css 的 margin
+  border: {
+    stroke: 'red', // 边框颜色
+    //lineWidth: 3, // 边框粗细
+    strokeOpacity: 0.5, // 边框的透明度设置，0 至 1 范围的数据
+    fill: '#FFFFFF' ,// 设置整个容器的背景色
+    fillOpacity: 0.7, // 背景色的透明度设置，0 至 1 范围的数据
+    radius: 5 // 边框的圆角
+  },
+  background: {
+    stroke: 'red', // 边颜色
+    strokeOpacity: 0.5, // 边框的透明度设置，0 至 1 范围的数据
+    lineWidth: 1, // 边框粗细
+    fill: '#FFFF99', // 背景色
+    fillOpacity: 0.7, // 背景色的透明度设置，0 至 1 范围的数据
+    radius: 10 // 圆角设置
+  } // 绘图区域背景设置
+}
+});
+      chart.source(data, {
+        date: {
+          alias: '日期'
+        },
+        weight: {
+          alias: '体重(Kg)'
+        }
+      });
+      chart.line().position('date*weight').size(2);
+      // 添加辅助图片    
+      chart.render();
+    </script>
+</div>
+<div style="width:80%;margin:0 auto">
+{{to_target|safe}}
+<p ><strong><a class="log" href="/weights_information" title="健身日志">查看详情</a></strong></p>
+</div>
+</div>
+<div class="footer" style="bottom: 0;text-align: center;">
+    <p>健康生活每一天</p>
+</div>
+</body>
+</html>

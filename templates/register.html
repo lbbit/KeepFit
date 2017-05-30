@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta author="ABLACK">
+	<title>用户注册</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='register-login.css')}}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<style type="text/css" >
+body { background-image: url({{url_for('static',filename='8.jpg')}}); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: fixed; }
+</style>
+</head>
+<body>
+<div id="box"></div>
+<div class="cent-box register-box">
+	<div class="cent-box-header">
+		<a href="/"><h1 class="main-title hide">ABLACK</h1></a>		 
+	</div>
+	<div class="cont-main clearfix">
+		<div class="index-tab">
+			<div class="index-slide-nav">
+				<a href="/login_index">登录</a>
+				<a href="/register_index" class="active">注册</a>
+				<div class="slide-bar slide-bar1"></div>				
+			</div>
+		</div>
+	<form action="/register_action" method="post">
+		<div class="login form">
+			<div class="group">
+				<div class="group-ipt user">
+					<input type="text" name="user" id="user" class="ipt" placeholder="设置用户名" required>
+				</div>
+				<div class="group-ipt password">
+					<input type="password" name="password" id="password" class="ipt" placeholder="设置登录密码" required>
+				</div>
+				<div class="group-ipt password1">
+					<input type="password" name="password1" id="password1" class="ipt" placeholder="重复密码" required>
+				</div>
+				<div class="group-ipt weight">
+					<input type="number" name="weight" id="weight" class="ipt" placeholder="目标体重(Kg)" required>
+				</div>
+				<div class="tips">
+					<p style='color:red; font-size:10px; text-align:center;'>{{tips|safe}}</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="button">
+			<button type="submit" class="login-btn register-btn" id="button">注册</button>
+		</div>
+	</form>
+	</div>
+</div>
+
+<div class="footer">
+	<p>健康生活每一天</p>
+</div>
+</body>
+</html>

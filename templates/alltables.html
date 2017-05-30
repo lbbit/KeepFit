@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script type="text/javascript" src="{{url_for('static',filename='jquery.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static',filename='g2.js')}}"></script>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<meta charset="UTF-8">
+	<title>健康中心</title>
+<style type="text/css">
+    .head {
+    background: #FFA07A;
+    height: 82px;
+    width: 100%;
+}
+body, div, h1 {
+    margin: 0;
+    padding: 0;
+}
+.head .logo a {
+    display: block;
+    height: 79px;
+    width: 120px;
+    margin-left: 100px
+    text-indent: -999999px;
+    background-image: url({{url_for('static',filename='logo1.png')}});
+    background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;
+    background-position: 0 0;
+
+}
+body a {
+    color: #9b8878;
+    text-decoration: none;
+}
+.head .logo {
+    float: left;
+}
+.login-herf, .head-user,.head-logout{
+    line-height: 82px;
+    float: right;
+    margin-right: 50px
+}
+</style>
+<style type="text/css" >
+body { background-image: url({{url_for('static',filename='8.jpg')}}); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: fixed;}
+</style>
+</head>
+<body>
+	<div id='head' class='head'>
+		<div id='head-left' class='head-left'>
+			<div id='head-logo' class='logo'><a href="/"></a></div>
+		</div>		
+		<div id='head-right' class='head-right'>
+			<div id='head-logout' class='head-logout'><a href="/logout_action">{{logout_text|safe}}</a></div>
+			
+			<div id='head-user' class='head-user'><a href="/homepage_index">{{home_text|safe}}</a></div>
+			<div id='head-login' class='login-herf'><a href="/login_index">{{login_text|safe}}</a></div>
+		</div>
+	</div>
+	<div id='all-tables' class='all-tables'>
+		{{all_tables|safe}}
+	</div>
+	<div class="footer" style="bottom: 0;text-align: center;">
+	<p>健康生活每一天</p>
+</div>
+</body>
+</html>
