@@ -2,10 +2,11 @@
 from flask import Flask,render_template,request,make_response,redirect
 from pymongo import MongoClient
 import time
+
 app=Flask(__name__)
 #返回所有用户信息的数据库连接
 def getCollectionOfUser():
-	client = MongoClient('localhost', 27017)
+	client = MongoClient('mongo', 27017)
 	db_name = 'keepfit'
 	db = client[db_name]
 	collection_usersInfo = db['usersInfo']
